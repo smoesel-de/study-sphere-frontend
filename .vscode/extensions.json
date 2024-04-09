@@ -1,0 +1,17 @@
+{
+	"recommendations": [
+		"42Crunch.vscode-openapi",
+		"ardenivanov.svelte-intellisense",
+		"bradlc.vscode-tailwindcss",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"GitHub.vscode-pull-request-github",
+		"ms-azuretools.vscode-docker",
+		"ms-vscode.js-debug-nightly",
+		"ms-vscode.vscode-typescript-next",
+		"streetsidesoftware.code-spell-checker",
+		"streetsidesoftware.code-spell-checker-german",
+		"svelte.svelte-vscode",
+		"usernamehw.errorlens"
+	]
+}

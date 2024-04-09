@@ -1,0 +1,31 @@
+{
+	"cSpell.diagnosticLevel": "Hint",
+	"cSpell.language": "en,de",
+	"cSpell.words": ["SMOESEL"],
+	"editor.bracketPairColorization.enabled": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "always",
+		"source.organizeImports": "always"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"eslint.validate": ["typescript", "svelte"],
+	"errorLens.excludeBySource": ["cSpell"],
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.patterns": {
+		"package.json": "package-lock.json, pnpm-lock.yaml, tsconfig.json, vite.config.ts, svelte.config.js",
+		"tailwind.config.js": "postcss.config.js",
+		".env": ".env.example",
+		".eslintrc.cjs": ".eslintignore",
+		".prettierrc": ".prettierignore"
+	},
+	"files.exclude": {
+		"node_modules/": true,
+		".svelte-kit/": true
+	},
+	"githubPullRequests.assignCreated": "${user}",
+	"githubPullRequests.defaultMergeMethod": "squash",
+	"svelte.enable-ts-plugin": true,
+	"workbench.editor.labelFormat": "short",
+	"workbench.tree.indent": 16
+}
