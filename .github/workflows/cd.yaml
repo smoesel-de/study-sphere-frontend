@@ -2,9 +2,13 @@ name: Build and Deploy Frontend
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/*
 
 jobs:
   build_and_deploy:
+    if: ${{ vars.DEPLOY == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
