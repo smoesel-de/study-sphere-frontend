@@ -1,5 +1,4 @@
-import type { PageServerLoad } from './$types';
-
-export const load = (async () => {
-	return {};
-}) satisfies PageServerLoad;
+export const load = async ({ locals }) => {
+	const userInfo = await locals.client.GET('/user/info');
+	return { userInfo: userInfo.data };
+};
