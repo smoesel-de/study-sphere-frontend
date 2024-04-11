@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import { superForm } from 'sveltekit-superforms';
 
 	export let data;
@@ -18,7 +19,7 @@
 				<div>
 					<label
 						class="input input-bordered flex items-center gap-2"
-						class:input-error={$errors.email}
+						class:input-error={$errors.email || $page.status === 401}
 					>
 						<i class="fa-solid fa-envelope"></i>
 						<input name="email" placeholder="E-Mail" bind:value={$form.email} />
@@ -32,7 +33,7 @@
 				<div>
 					<label
 						class="input input-bordered flex items-center gap-2"
-						class:input-error={$errors.password}
+						class:input-error={$errors.password || $page.status === 401}
 					>
 						<i class="fa-solid fa-lock"></i>
 						<input
@@ -48,6 +49,12 @@
 						</div>
 					{/if}
 				</div>
+				{#if $message}
+					<div class="alert alert-error">
+						<i class="fa-solid fa-triangle-exclamation"></i>
+						<span>{$message}</span>
+					</div>
+				{/if}
 				<div class="card-actions justify-center">
 					<button class="btn btn-primary">
 						<i class="fa-solid fa-paper-plane"></i> Anmelden

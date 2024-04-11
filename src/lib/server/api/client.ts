@@ -3,4 +3,10 @@ import createClient from 'openapi-fetch';
 
 import type { paths } from './spec';
 
-export const client = createClient<paths>({ baseUrl: env.API_URL });
+export const createApiClient = (token?: string) =>
+	createClient<paths>({
+		baseUrl: env.API_URL,
+		headers: {
+			'Session-Token': token
+		}
+	});
