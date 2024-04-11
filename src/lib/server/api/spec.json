@@ -1,0 +1,211 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Study Sphere Backend API",
+    "summary": "An API for the use in a Study Sphere frontend",
+    "version": ""
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Session Management"
+        ],
+        "description": "Acquire a session token for authentication on access-restricted endpoints.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginData"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "plain text",
+            "content": {
+              "text/plain; charset=utf-8": {}
+            }
+          },
+          "401": {
+            "description": "plain text",
+            "content": {
+              "text/plain; charset=utf-8": {}
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Session Management"
+        ],
+        "description": "Invalidates the session token.",
+        "responses": {
+          "401": {
+            "description": "plain text",
+            "content": {
+              "text/plain; charset=utf-8": {}
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionToken": []
+          }
+        ]
+      }
+    },
+    "/user/info": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Gets all personal information for the logged in user.",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserData"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "plain text",
+            "content": {
+              "text/plain; charset=utf-8": {}
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionToken": []
+          }
+        ]
+      }
+    },
+    "/doc/": {
+      "get": {
+        "tags": [
+          "Documentation"
+        ],
+        "description": "This documentation page.",
+        "responses": {
+          "200": {
+            "description": "HTML content",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "SessionToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Session-Token",
+        "description": "A token identifying the user."
+      }
+    },
+    "schemas": {
+      "LoginData": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserData": {
+        "type": "object",
+        "required": [
+          "email",
+          "fore_name",
+          "last_name"
+        ],
+        "properties": {
+          "birthdate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "city": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "country": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "email": {
+            "type": "string"
+          },
+          "fore_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "street": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "telephone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "zip": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "User Management"
+    },
+    {
+      "name": "Session Management",
+      "description": "User Management"
+    },
+    {
+      "name": "Documentation",
+      "description": "User Management"
+    }
+  ]
+}
