@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Stduy Sphere</title>
+	<title>Study Sphere</title>
 </svelte:head>
 
 <div class="card mt-24 bg-base-100 shadow-xl">
