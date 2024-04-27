@@ -1,6 +1,10 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
+
 	export let data;
 </script>
+
+<Meta title="Home" description="Die Homeseite" />
 
 <div class="card mt-24 bg-base-100 shadow-xl">
 	<div class="card-body space-y-2">
