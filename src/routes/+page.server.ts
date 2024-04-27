@@ -2,12 +2,12 @@ import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
 import { fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { message, superValidate } from 'sveltekit-superforms/server';
+import { superValidate, setError } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const loginFormSchema = z.object({
-	email: z.string().email('Bitte geben Sie eine gültige E-Mail-Adresse an'),
-	password: z.string().min(1, 'Geben Sie ein Passwort ein')
+	email: z.string().email('Bitte gib eine gültige E-Mail-Adresse ein'),
+	password: z.string().min(1, 'Bitte gib ein Passwort ein')
 });
 
 export const load = async () => {
@@ -31,7 +31,8 @@ export const actions = {
 		});
 		switch (response.response.status) {
 			case 401:
-				return message(form, 'Die E-Mail oder das Passwort sind nicht korrekt.', { status: 401 });
+				setError(form, 'email', 'Die E-Mail oder das Passwort sind nicht korrekt.');
+				return setError(form, 'password', 'Die E-Mail oder das Passwort sind nicht korrekt.');
 			case 200:
 				cookies.set('token', response.data!, {
 					path: '/',
@@ -40,7 +41,7 @@ export const actions = {
 				});
 				return redirect(302, '/home');
 			default:
-				return message(form, 'Ein unbekannter Fehler ist aufgetreten.', { status: 500 });
+				return { form };
 		}
 	}
 };
