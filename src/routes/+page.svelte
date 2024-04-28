@@ -18,8 +18,8 @@
 
 <Meta title="Anmeldung" description="Melde dich bei Study Sphere an" />
 
-<div class="flex min-h-screen flex-col justify-center">
-	<div class="card mx-auto max-w-5xl bg-base-100 shadow-xl lg:card-side">
+<div class="flex min-h-screen flex-col justify-center bg-base-200">
+	<div class="card mx-2 max-w-5xl bg-base-100 shadow-xl lg:card-side sm:mx-auto">
 		<figure class="!hidden w-1/2 lg:!block">
 			<div class="relative">
 				<img src={login_background} alt="" />
