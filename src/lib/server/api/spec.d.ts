@@ -20,10 +20,9 @@ export interface paths {
             "text/plain; charset=utf-8": unknown;
           };
         };
-        /** @description plain text */
         401: {
           content: {
-            "text/plain; charset=utf-8": unknown;
+            "application/json": components["schemas"]["ApiError"];
           };
         };
       };
@@ -33,10 +32,9 @@ export interface paths {
     /** @description Invalidates the session token. */
     post: {
       responses: {
-        /** @description plain text */
         401: {
           content: {
-            "text/plain; charset=utf-8": unknown;
+            "application/json": components["schemas"]["ApiError"];
           };
         };
       };
@@ -51,10 +49,26 @@ export interface paths {
             "application/json": components["schemas"]["UserData"];
           };
         };
-        /** @description plain text */
         401: {
           content: {
-            "text/plain; charset=utf-8": unknown;
+            "application/json": components["schemas"]["ApiError"];
+          };
+        };
+      };
+    };
+  };
+  "/user/modules": {
+    /** @description Gets all modules that the user is enrolled in. */
+    get: {
+      responses: {
+        200: {
+          content: {
+            "application/json": components["schemas"]["ModuleData"][];
+          };
+        };
+        401: {
+          content: {
+            "application/json": components["schemas"]["ApiError"];
           };
         };
       };
@@ -79,9 +93,24 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
+    ApiError: {
+      error_code: string;
+      explanation?: string | null;
+    };
     LoginData: {
       email: string;
       password: string;
+    };
+    ModuleData: {
+      /** Format: int32 */
+      credit_points?: number | null;
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      lecturer_id?: number | null;
+      name: string;
+      /** Format: int32 */
+      parent_id?: number | null;
     };
     UserData: {
       /** Format: date */

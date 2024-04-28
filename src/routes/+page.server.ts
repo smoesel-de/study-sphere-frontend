@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
 import { fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate, setError } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const loginFormSchema = z.object({
@@ -39,7 +39,7 @@ export const actions = {
 					secure: env.NODE_ENV === 'production',
 					maxAge: 60 * 60 * 24 * 7
 				});
-				return redirect(302, '/home');
+				return redirect(302, '/start');
 			default:
 				return { form };
 		}

@@ -7,7 +7,7 @@ export const handle = async ({ event, resolve }) => {
 	const response = await event.locals.client.GET('/user/info');
 	if (response.response.status === 200) {
 		if (event.url.pathname === '/') {
-			return redirect(302, '/home');
+			return redirect(302, '/start');
 		}
 	} else if (event.url.pathname !== '/') {
 		return redirect(302, '/');
