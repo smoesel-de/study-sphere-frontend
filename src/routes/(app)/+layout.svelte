@@ -7,12 +7,14 @@
 	const drawerId = 'drawer';
 </script>
 
-<div class="bg-base-200">
+<div class="min-h-screen bg-base-200">
 	<div class="drawer lg:drawer-open">
 		<input id={drawerId} type="checkbox" class="drawer-toggle" />
 		<div class="drawer-content">
 			<Navbar initials={data.initials} {drawerId} />
-			<slot />
+			<div class="p-4">
+				<slot />
+			</div>
 		</div>
 		<Sidebar {drawerId} />
 	</div>
