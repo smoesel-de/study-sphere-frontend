@@ -3,7 +3,7 @@
 	export let drawerId: string;
 </script>
 
-<nav class="navbar bg-base-100">
+<nav class="tart-0 navbar sticky top-0 z-20 bg-base-100">
 	<div class="flex w-full">
 		<div class="flex-1 lg:invisible">
 			<label for={drawerId} aria-label="open sidebar" class="btn btn-square btn-ghost text-xl">

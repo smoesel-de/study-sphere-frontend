@@ -1,4 +1,7 @@
-export const load = async ({ locals }) => {
-	const userInfo = await locals.client.GET('/user/info');
-	return { userInfo: userInfo.data };
+import { courses } from '$lib/fakeData';
+
+export const load = async () => {
+	return {
+		courses: courses.slice(0, 3)
+	};
 };
