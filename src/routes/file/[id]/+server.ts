@@ -1,7 +1,6 @@
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ locals, params }) => {
-	console.log('fileId: ', params.id);
 	const fileContent = await locals.client.GET('/file/{file_id}', {
 		params: {
 			path: {
@@ -18,8 +17,6 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 			}
 		}
 	});
-
-	console.log(fileInfo.data);
 
 	return new Response(fileContent.data, {
 		headers: {
