@@ -19,7 +19,14 @@
 		</li>
 		{#each pages as page}
 			<li>
-				<a href={page.link} class="text-lg" class:text-primary={activeUrl.startsWith(page.link)}>
+				<a
+					href={page.link}
+					class="text-lg"
+					class:text-primary={activeUrl.startsWith(page.link)}
+					on:click={() => {
+						document.getElementById(drawerId)?.click();
+					}}
+				>
 					<i class="fa-solid {page.icon}"></i>
 					{page.name}
 				</a>
