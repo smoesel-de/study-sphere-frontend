@@ -7,8 +7,8 @@ export const pages: Page[] = [
 		icon: 'fa-home'
 	},
 	{
-		name: 'Meine Kurse',
-		link: '/meine-kurse',
+		name: 'Meine Module',
+		link: '/meine-module',
 		icon: 'fa-school'
 	},
 	{

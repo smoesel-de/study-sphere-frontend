@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import logo from '$lib/assets/logo.png';
 	import { pages } from '$lib/constants';
 
 	export let drawerId: string;
@@ -13,13 +12,20 @@
 	<ul class="menu h-full w-80 bg-base-100 text-base-content">
 		<li class="mb-3">
 			<a class="text-2xl font-bold text-primary" href="/">
-				<img src={logo} class="h-12 w-12" alt="logo" />
+				<enhanced:img src="$lib/assets/logo.png" class="h-12 w-12" alt="logo" />
 				Study Sphere
 			</a>
 		</li>
 		{#each pages as page}
 			<li>
-				<a href={page.link} class="text-lg" class:text-primary={activeUrl.startsWith(page.link)}>
+				<a
+					href={page.link}
+					class="text-lg"
+					class:text-primary={activeUrl.startsWith(page.link)}
+					on:click={() => {
+						document.getElementById(drawerId)?.click();
+					}}
+				>
 					<i class="fa-solid {page.icon}"></i>
 					{page.name}
 				</a>
