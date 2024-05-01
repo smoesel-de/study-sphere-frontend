@@ -1,6 +1,4 @@
 <script lang="ts">
-	import login_background from '$lib/assets/login_background.jpg';
-	import logo from '$lib/assets/logo.png';
 	import Meta from '$lib/components/Meta.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	export let data;
@@ -22,12 +20,12 @@
 	<div class="card mx-2 max-w-5xl bg-base-100 shadow-xl lg:card-side sm:mx-auto">
 		<figure class="!hidden w-1/2 lg:!block">
 			<div class="relative">
-				<img src={login_background} alt="" />
+				<enhanced:img src="$lib/assets/login_background.jpg" alt="" />
 				<div class="absolute left-0 top-0 h-full w-full bg-gray-200 bg-opacity-75"></div>
 				<div
 					class="absolute top-0 flex h-full w-full flex-col items-center justify-center space-y-1"
 				>
-					<img src={logo} alt="Study Sphere Logo" class="w-28" />
+					<enhanced:img src="$lib/assets/logo.png" alt="Study Sphere Logo" class="w-28" />
 					<h2 class="text-6xl font-extrabold text-primary">Study Sphere</h2>
 				</div>
 			</div>
