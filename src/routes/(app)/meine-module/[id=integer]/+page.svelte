@@ -27,12 +27,19 @@
 <Heading title="Beiträge" class="mt-7" />
 
 <div class="mt-3">
-	{#each data.posts as post}
-		<div class="card bg-base-100 shadow-xl">
-			<div class="card-body">
-				<h2 class="card-title">{post.title}</h2>
-				<p>{post.publish_date}</p>
-			</div>
-		</div>
-	{/each}
+	{#if data.posts.length !== 0}
+		{#each data.posts as post}
+			<a
+				href="/meine-module/{data.module.id}/beitraege/{post.id}"
+				class="card bg-base-100 shadow-xl"
+			>
+				<div class="card-body">
+					<h2 class="card-title">{post.title}</h2>
+					<p><i class="fa-solid fa-calendar-day"></i> {post.publish_date}</p>
+				</div>
+			</a>
+		{/each}
+	{:else}
+		<p>Noch Keine Beiträge vorhanden</p>
+	{/if}
 </div>

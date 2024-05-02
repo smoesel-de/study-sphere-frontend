@@ -1,7 +1,7 @@
 {
 	"cSpell.diagnosticLevel": "Hint",
 	"cSpell.language": "en,de",
-	"cSpell.words": ["SMOESEL"],
+	"cSpell.words": ["dayjs", "SMOESEL"],
 	"editor.bracketPairColorization.enabled": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "always",

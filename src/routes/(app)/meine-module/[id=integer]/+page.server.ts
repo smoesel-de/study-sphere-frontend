@@ -1,3 +1,4 @@
+import { formatDate } from '$lib/utils/formatDate';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ params, locals }) => {
@@ -20,5 +21,13 @@ export const load = async ({ params, locals }) => {
 	if (module.response.status === 404 || posts.response.status === 404) {
 		return error(404, 'Das Modul wurde nicht gefunden.');
 	}
-	return { module: module.data!, posts: posts.data! };
+
+	const formattedPosts = posts.data!.map((post) => {
+		return {
+			...post,
+			publish_date: post.publish_date !== undefined ? formatDate(post.publish_date!) : undefined
+		};
+	});
+
+	return { module: module.data!, posts: formattedPosts };
 };
