@@ -97,6 +97,11 @@ export interface paths {
 	'/module/{module_id}/post': {
 		/** @description Get all posts of a module */
 		get: {
+			parameters: {
+				path: {
+					module_id: number;
+				};
+			};
 			responses: {
 				200: {
 					content: {

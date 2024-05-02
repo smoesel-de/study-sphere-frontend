@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ locals, params }) => {
@@ -17,6 +18,10 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 			}
 		}
 	});
+
+	if (fileContent.response.status === 404 || fileInfo.response.status === 404) {
+		return error(404, 'Die Datei wurde nicht gefunden.');
+	}
 
 	return new Response(fileContent.data, {
 		headers: {
