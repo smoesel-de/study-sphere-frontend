@@ -1,9 +1,9 @@
-const getInitial = (name: string) => name.charAt(0).toUpperCase();
+import { getInitials } from '$lib/utils/initials';
 
 export const load = async ({ locals, fetch }) => {
 	const userInfo = await locals.client.GET('/user/', { fetch });
-	if (userInfo.data)
-		return {
-			initials: getInitial(userInfo.data.fore_name) + getInitial(userInfo.data.last_name)
-		};
+	return {
+		initials: getInitials(userInfo.data!.fore_name, userInfo.data!.last_name),
+		avatar: userInfo.data!.avatar_file_id
+	};
 };

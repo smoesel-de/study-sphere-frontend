@@ -1,6 +1,9 @@
 <script lang="ts">
 	export let initials: string | undefined;
+	export let avatar: number | null | undefined;
 	export let drawerId: string;
+
+	console.log(avatar);
 </script>
 
 <nav class="tart-0 navbar sticky top-0 z-20 bg-base-100">
@@ -13,7 +16,11 @@
 		<div class="dropdown dropdown-end flex-none">
 			<div tabindex="0" role="button" class="avatar placeholder btn btn-circle btn-ghost">
 				<div class="w-10 rounded-full bg-neutral text-neutral-content">
-					<span class="text-lg">{initials}</span>
+					{#if avatar !== undefined && avatar !== null}
+						<img src="/file/{avatar}" alt="Avatar" class="rounded-full" />
+					{:else}
+						<span class="text-lg">{initials}</span>
+					{/if}
 				</div>
 			</div>
 			<ul class="menu dropdown-content menu-sm z-[1] mt-3 w-36 rounded-box bg-base-100 p-2 shadow">

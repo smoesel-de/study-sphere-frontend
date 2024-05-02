@@ -11,7 +11,7 @@
 	<div class="drawer lg:drawer-open">
 		<input id={drawerId} type="checkbox" class="drawer-toggle" />
 		<div class="drawer-content">
-			<Navbar initials={data.initials} {drawerId} />
+			<Navbar initials={data.initials} avatar={data.avatar} {drawerId} />
 			<div class="p-4">
 				<slot />
 			</div>
