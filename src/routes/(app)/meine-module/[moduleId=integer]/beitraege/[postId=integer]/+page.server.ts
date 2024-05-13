@@ -19,7 +19,6 @@ export const load = async ({ locals, params, fetch }) => {
 
 	const formattedPost = {
 		...post.data!,
-
 		publish_date:
 			post.data!.publish_date !== undefined ? formatDate(post.data!.publish_date!) : undefined,
 		files: await Promise.all(
@@ -34,7 +33,8 @@ export const load = async ({ locals, params, fetch }) => {
 				});
 				return { ...fileInfo.data!, ...file };
 			})
-		)
+		),
+		due_date: post.data!.due_date !== undefined ? formatDate(post.data!.due_date!, true) : undefined
 	};
 
 	const author = await locals.client.GET('/user/{user_id}', {
