@@ -5,5 +5,5 @@
 
 <svelte:head>
 	<title>{title} • Study Sphere</title>
-	<meta name={description} />
+	<meta name="description" content={description} />
 </svelte:head>
