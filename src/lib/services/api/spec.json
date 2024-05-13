@@ -21,12 +21,6 @@
 					"required": true
 				},
 				"responses": {
-					"200": {
-						"description": "plain text",
-						"content": {
-							"text/plain; charset=utf-8": {}
-						}
-					},
 					"401": {
 						"description": "",
 						"content": {
@@ -58,7 +52,8 @@
 				},
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -66,7 +61,7 @@
 		"/user/": {
 			"get": {
 				"tags": ["User"],
-				"description": "Gets all personal information for the logged in user.",
+				"description": "Gets all private and public information for the logged in user.",
 				"responses": {
 					"200": {
 						"description": "",
@@ -91,7 +86,54 @@
 				},
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/user/{user_id}": {
+			"get": {
+				"tags": ["User"],
+				"description": "Gets all public information for the logged in user.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "user_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserData"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -127,7 +169,8 @@
 				},
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -136,6 +179,18 @@
 			"get": {
 				"tags": ["Module"],
 				"description": "Get a single module by id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "",
@@ -151,20 +206,10 @@
 						"description": "Module not found or no access to it"
 					}
 				},
-				"parameters": [
-					{
-						"name": "module_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int32"
-						}
-					}
-				],
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -173,6 +218,18 @@
 			"get": {
 				"tags": ["Module"],
 				"description": "Get all posts of a module",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "",
@@ -193,7 +250,57 @@
 				},
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/module/{module_id}/post/{post_id}": {
+			"get": {
+				"tags": ["Module"],
+				"description": "Get a post of a module by id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					},
+					{
+						"in": "path",
+						"name": "post_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostData"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Module or Post not found or no access to it"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -202,6 +309,18 @@
 			"get": {
 				"tags": ["Files"],
 				"description": "Retrieves a File by its id.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "file_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "Requested file was returned successfully"
@@ -212,18 +331,8 @@
 				},
 				"security": [
 					{
-						"SessionToken": []
-					}
-				],
-				"parameters": [
-					{
-						"name": "file_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int32"
-						}
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -232,6 +341,18 @@
 			"get": {
 				"tags": ["Files"],
 				"description": "Retrieves info about a File, by its id.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "file_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "",
@@ -247,20 +368,10 @@
 						"description": "Returned if the file does not exist or access is denied"
 					}
 				},
-				"parameters": [
-					{
-						"name": "file_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "integer",
-							"format": "int32"
-						}
-					}
-				],
 				"security": [
 					{
-						"SessionToken": []
+						"SessionToken": [],
+						"SessionCookie": []
 					}
 				]
 			}
@@ -291,6 +402,12 @@
 				"in": "header",
 				"name": "Session-Token",
 				"description": "A token identifying the user."
+			},
+			"SessionCookie": {
+				"type": "apiKey",
+				"in": "cookie",
+				"name": "Session-Token",
+				"description": "A cookie identifying the user."
 			}
 		},
 		"schemas": {
@@ -303,6 +420,16 @@
 					},
 					"explanation": {
 						"type": ["string", "null"]
+					}
+				}
+			},
+			"FileIdParam": {
+				"type": "object",
+				"required": ["file_id"],
+				"properties": {
+					"file_id": {
+						"type": "integer",
+						"format": "int32"
 					}
 				}
 			},
@@ -363,8 +490,40 @@
 					}
 				}
 			},
+			"ModuleIdParam": {
+				"type": "object",
+				"required": ["module_id"],
+				"properties": {
+					"module_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
 			"PostData": {
 				"type": "object",
+				"anyOf": [
+					{
+						"type": "object",
+						"required": ["module_id"],
+						"properties": {
+							"module_id": {
+								"type": "integer",
+								"format": "int32"
+							}
+						}
+					},
+					{
+						"type": "object",
+						"required": ["lecture_id"],
+						"properties": {
+							"lecture_id": {
+								"type": "integer",
+								"format": "int32"
+							}
+						}
+					}
+				],
 				"required": ["author_id", "files", "id"],
 				"properties": {
 					"author_id": {
@@ -418,23 +577,72 @@
 				"type": "string",
 				"enum": ["submission", "attachment"]
 			},
+			"PostIdParam": {
+				"type": "object",
+				"required": ["post_id"],
+				"properties": {
+					"post_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
 			"UserData": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/UserDataPublic"
+					},
+					{
+						"type": "object",
+						"required": ["email", "fore_name", "id", "last_name"],
+						"properties": {
+							"avatar_file_id": {
+								"type": ["integer", "null"],
+								"format": "int32"
+							},
+							"birthdate": {
+								"type": ["string", "null"],
+								"format": "date"
+							},
+							"city": {
+								"type": ["string", "null"]
+							},
+							"country": {
+								"type": ["string", "null"]
+							},
+							"email": {
+								"type": "string"
+							},
+							"fore_name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "integer",
+								"format": "int32"
+							},
+							"last_name": {
+								"type": "string"
+							},
+							"street": {
+								"type": ["string", "null"]
+							},
+							"telephone": {
+								"type": ["string", "null"]
+							},
+							"zip": {
+								"type": ["string", "null"]
+							}
+						}
+					}
+				]
+			},
+			"UserDataPublic": {
 				"type": "object",
 				"required": ["email", "fore_name", "id", "last_name"],
 				"properties": {
 					"avatar_file_id": {
 						"type": ["integer", "null"],
 						"format": "int32"
-					},
-					"birthdate": {
-						"type": ["string", "null"],
-						"format": "date"
-					},
-					"city": {
-						"type": ["string", "null"]
-					},
-					"country": {
-						"type": ["string", "null"]
 					},
 					"email": {
 						"type": "string"
@@ -448,15 +656,16 @@
 					},
 					"last_name": {
 						"type": "string"
-					},
-					"street": {
-						"type": ["string", "null"]
-					},
-					"telephone": {
-						"type": ["string", "null"]
-					},
-					"zip": {
-						"type": ["string", "null"]
+					}
+				}
+			},
+			"UserIdParam": {
+				"type": "object",
+				"required": ["user_id"],
+				"properties": {
+					"user_id": {
+						"type": "integer",
+						"format": "int32"
 					}
 				}
 			}
@@ -469,7 +678,11 @@
 		},
 		{
 			"name": "Session Management",
-			"description": "User Management"
+			"description": "Session Management"
+		},
+		{
+			"name": "Module",
+			"description": "Module Management"
 		},
 		{
 			"name": "Documentation",
