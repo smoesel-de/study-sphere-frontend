@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import defaultModuleBanner from '$lib/assets/default_module_banner.webp';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Heading from '$lib/components/Heading.svelte';

@@ -6,7 +6,7 @@ export const load = async ({ params, locals, fetch }) => {
 	const module = await locals.client.GET('/module/{module_id}', {
 		params: {
 			path: {
-				module_id: parseInt(params.id)
+				module_id: parseInt(params.moduleId)
 			}
 		},
 		fetch
@@ -15,7 +15,7 @@ export const load = async ({ params, locals, fetch }) => {
 	const posts = await locals.client.GET('/module/{module_id}/post', {
 		params: {
 			path: {
-				module_id: parseInt(params.id)
+				module_id: parseInt(params.moduleId)
 			},
 			fetch
 		}
