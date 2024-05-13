@@ -1,810 +1,692 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Study Sphere Backend API",
-    "summary": "An API for the use in a Study Sphere frontend",
-    "version": ""
-  },
-  "paths": {
-    "/login": {
-      "post": {
-        "tags": [
-          "Session Management"
-        ],
-        "description": "Acquire a session token for authentication on access-restricted endpoints.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginData"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/logout": {
-      "post": {
-        "tags": [
-          "Session Management"
-        ],
-        "description": "Invalidates the session token.",
-        "responses": {
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/user/": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "Gets all private and public information for the logged in user.",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserData"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/user/{user_id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "Gets all public information for the logged in user.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "user_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserData"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/module/": {
-      "get": {
-        "tags": [
-          "Module"
-        ],
-        "description": "Gets all modules that the user is enrolled in.",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ModuleData"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/module/{module_id}": {
-      "get": {
-        "tags": [
-          "Module"
-        ],
-        "description": "Get a single module by id",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "module_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ModuleData"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Module not found or no access to it"
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/module/{module_id}/post": {
-      "get": {
-        "tags": [
-          "Module"
-        ],
-        "description": "Get all posts of a module",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "module_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PostData"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Module not found or no access to it"
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/module/{module_id}/post/{post_id}": {
-      "get": {
-        "tags": [
-          "Module"
-        ],
-        "description": "Get a post of a module by id",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "module_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          },
-          {
-            "in": "path",
-            "name": "post_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PostData"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Module or Post not found or no access to it"
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/file/{file_id}": {
-      "get": {
-        "tags": [
-          "Files"
-        ],
-        "description": "Retrieves a File by its id.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "file_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Requested file was returned successfully"
-          },
-          "404": {
-            "description": "Returned if the file does not exist or access is denied"
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/file/{file_id}/info": {
-      "get": {
-        "tags": [
-          "Files"
-        ],
-        "description": "Retrieves info about a File, by its id.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "file_id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "style": "simple"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FileInfoData"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Returned if the file does not exist or access is denied"
-          }
-        },
-        "security": [
-          {
-            "SessionToken": [],
-            "SessionCookie": []
-          }
-        ]
-      }
-    },
-    "/doc/": {
-      "get": {
-        "tags": [
-          "Documentation"
-        ],
-        "description": "This documentation page.",
-        "responses": {
-          "200": {
-            "description": "HTML content",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "SessionToken": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Session-Token",
-        "description": "A token identifying the user."
-      },
-      "SessionCookie": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "Session-Token",
-        "description": "A cookie identifying the user."
-      }
-    },
-    "schemas": {
-      "ApiError": {
-        "type": "object",
-        "required": [
-          "error_code"
-        ],
-        "properties": {
-          "error_code": {
-            "type": "string"
-          },
-          "explanation": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      },
-      "FileIdParam": {
-        "type": "object",
-        "required": [
-          "file_id"
-        ],
-        "properties": {
-          "file_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "FileInfoData": {
-        "type": "object",
-        "required": [
-          "mime_type",
-          "name",
-          "uploader_id"
-        ],
-        "properties": {
-          "mime_type": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "uploader_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "LoginData": {
-        "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "ModuleData": {
-        "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
-        "properties": {
-          "banner_file_id": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int32"
-          },
-          "credit_points": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int32"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lecturer_id": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "parent_id": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int32"
-          }
-        }
-      },
-      "ModuleIdParam": {
-        "type": "object",
-        "required": [
-          "module_id"
-        ],
-        "properties": {
-          "module_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "PostData": {
-        "type": "object",
-        "anyOf": [
-          {
-            "type": "object",
-            "required": [
-              "module_id"
-            ],
-            "properties": {
-              "module_id": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "lecture_id"
-            ],
-            "properties": {
-              "lecture_id": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        ],
-        "required": [
-          "author_id",
-          "files",
-          "id"
-        ],
-        "properties": {
-          "author_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "due_date": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int64"
-          },
-          "files": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PostFileData"
-            }
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "publish_date": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int64"
-          },
-          "title": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      },
-      "PostFileData": {
-        "type": "object",
-        "required": [
-          "file_id",
-          "file_type",
-          "id"
-        ],
-        "properties": {
-          "file_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "file_type": {
-            "$ref": "#/components/schemas/PostFileType"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "PostFileType": {
-        "type": "string",
-        "enum": [
-          "submission",
-          "attachment"
-        ]
-      },
-      "PostIdParam": {
-        "type": "object",
-        "required": [
-          "post_id"
-        ],
-        "properties": {
-          "post_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "UserData": {
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/UserDataPublic"
-          },
-          {
-            "type": "object",
-            "required": [
-              "email",
-              "fore_name",
-              "id",
-              "last_name"
-            ],
-            "properties": {
-              "avatar_file_id": {
-                "type": [
-                  "integer",
-                  "null"
-                ],
-                "format": "int32"
-              },
-              "birthdate": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "date"
-              },
-              "city": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "country": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "email": {
-                "type": "string"
-              },
-              "fore_name": {
-                "type": "string"
-              },
-              "id": {
-                "type": "integer",
-                "format": "int32"
-              },
-              "last_name": {
-                "type": "string"
-              },
-              "street": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "telephone": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "zip": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "UserDataPublic": {
-        "type": "object",
-        "required": [
-          "email",
-          "fore_name",
-          "id",
-          "last_name"
-        ],
-        "properties": {
-          "avatar_file_id": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "int32"
-          },
-          "email": {
-            "type": "string"
-          },
-          "fore_name": {
-            "type": "string"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "last_name": {
-            "type": "string"
-          }
-        }
-      },
-      "UserIdParam": {
-        "type": "object",
-        "required": [
-          "user_id"
-        ],
-        "properties": {
-          "user_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      }
-    }
-  },
-  "tags": [
-    {
-      "name": "User",
-      "description": "User Management"
-    },
-    {
-      "name": "Session Management",
-      "description": "Session Management"
-    },
-    {
-      "name": "Module",
-      "description": "Module Management"
-    },
-    {
-      "name": "Documentation",
-      "description": "User Management"
-    }
-  ]
+	"openapi": "3.1.0",
+	"info": {
+		"title": "Study Sphere Backend API",
+		"summary": "An API for the use in a Study Sphere frontend",
+		"version": ""
+	},
+	"paths": {
+		"/login": {
+			"post": {
+				"tags": ["Session Management"],
+				"description": "Acquire a session token for authentication on access-restricted endpoints.",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginData"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/logout": {
+			"post": {
+				"tags": ["Session Management"],
+				"description": "Invalidates the session token.",
+				"responses": {
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/user/": {
+			"get": {
+				"tags": ["User"],
+				"description": "Gets all private and public information for the logged in user.",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserData"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/user/{user_id}": {
+			"get": {
+				"tags": ["User"],
+				"description": "Gets all public information for the logged in user.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "user_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserData"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/module/": {
+			"get": {
+				"tags": ["Module"],
+				"description": "Gets all modules that the user is enrolled in.",
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ModuleData"
+									}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiError"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/module/{module_id}": {
+			"get": {
+				"tags": ["Module"],
+				"description": "Get a single module by id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ModuleData"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Module not found or no access to it"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/module/{module_id}/post": {
+			"get": {
+				"tags": ["Module"],
+				"description": "Get all posts of a module",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/PostData"
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Module not found or no access to it"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/module/{module_id}/post/{post_id}": {
+			"get": {
+				"tags": ["Module"],
+				"description": "Get a post of a module by id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "module_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					},
+					{
+						"in": "path",
+						"name": "post_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PostData"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Module or Post not found or no access to it"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/file/{file_id}": {
+			"get": {
+				"tags": ["Files"],
+				"description": "Retrieves a File by its id.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "file_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Requested file was returned successfully"
+					},
+					"404": {
+						"description": "Returned if the file does not exist or access is denied"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/file/{file_id}/info": {
+			"get": {
+				"tags": ["Files"],
+				"description": "Retrieves info about a File, by its id.",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "file_id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						},
+						"style": "simple"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FileInfoData"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Returned if the file does not exist or access is denied"
+					}
+				},
+				"security": [
+					{
+						"SessionToken": [],
+						"SessionCookie": []
+					}
+				]
+			}
+		},
+		"/doc/": {
+			"get": {
+				"tags": ["Documentation"],
+				"description": "This documentation page.",
+				"responses": {
+					"200": {
+						"description": "HTML content",
+						"content": {
+							"text/html": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"SessionToken": {
+				"type": "apiKey",
+				"in": "header",
+				"name": "Session-Token",
+				"description": "A token identifying the user."
+			},
+			"SessionCookie": {
+				"type": "apiKey",
+				"in": "cookie",
+				"name": "Session-Token",
+				"description": "A cookie identifying the user."
+			}
+		},
+		"schemas": {
+			"ApiError": {
+				"type": "object",
+				"required": ["error_code"],
+				"properties": {
+					"error_code": {
+						"type": "string"
+					},
+					"explanation": {
+						"type": ["string", "null"]
+					}
+				}
+			},
+			"FileIdParam": {
+				"type": "object",
+				"required": ["file_id"],
+				"properties": {
+					"file_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"FileInfoData": {
+				"type": "object",
+				"required": ["mime_type", "name", "uploader_id"],
+				"properties": {
+					"mime_type": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"uploader_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"LoginData": {
+				"type": "object",
+				"required": ["email", "password"],
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				}
+			},
+			"ModuleData": {
+				"type": "object",
+				"required": ["id", "name"],
+				"properties": {
+					"banner_file_id": {
+						"type": ["integer", "null"],
+						"format": "int32"
+					},
+					"credit_points": {
+						"type": ["integer", "null"],
+						"format": "int32"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"lecturer_id": {
+						"type": ["integer", "null"],
+						"format": "int32"
+					},
+					"name": {
+						"type": "string"
+					},
+					"parent_id": {
+						"type": ["integer", "null"],
+						"format": "int32"
+					}
+				}
+			},
+			"ModuleIdParam": {
+				"type": "object",
+				"required": ["module_id"],
+				"properties": {
+					"module_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"PostData": {
+				"type": "object",
+				"anyOf": [
+					{
+						"type": "object",
+						"required": ["module_id"],
+						"properties": {
+							"module_id": {
+								"type": "integer",
+								"format": "int32"
+							}
+						}
+					},
+					{
+						"type": "object",
+						"required": ["lecture_id"],
+						"properties": {
+							"lecture_id": {
+								"type": "integer",
+								"format": "int32"
+							}
+						}
+					}
+				],
+				"required": ["author_id", "files", "id"],
+				"properties": {
+					"author_id": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"description": {
+						"type": ["string", "null"]
+					},
+					"due_date": {
+						"type": ["integer", "null"],
+						"format": "int64"
+					},
+					"files": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PostFileData"
+						}
+					},
+					"id": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"publish_date": {
+						"type": ["integer", "null"],
+						"format": "int64"
+					},
+					"title": {
+						"type": ["string", "null"]
+					}
+				}
+			},
+			"PostFileData": {
+				"type": "object",
+				"required": ["file_id", "file_type", "id"],
+				"properties": {
+					"file_id": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"file_type": {
+						"$ref": "#/components/schemas/PostFileType"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"PostFileType": {
+				"type": "string",
+				"enum": ["submission", "attachment"]
+			},
+			"PostIdParam": {
+				"type": "object",
+				"required": ["post_id"],
+				"properties": {
+					"post_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"UserData": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/UserDataPublic"
+					},
+					{
+						"type": "object",
+						"required": ["email", "fore_name", "id", "last_name"],
+						"properties": {
+							"avatar_file_id": {
+								"type": ["integer", "null"],
+								"format": "int32"
+							},
+							"birthdate": {
+								"type": ["string", "null"],
+								"format": "date"
+							},
+							"city": {
+								"type": ["string", "null"]
+							},
+							"country": {
+								"type": ["string", "null"]
+							},
+							"email": {
+								"type": "string"
+							},
+							"fore_name": {
+								"type": "string"
+							},
+							"id": {
+								"type": "integer",
+								"format": "int32"
+							},
+							"last_name": {
+								"type": "string"
+							},
+							"street": {
+								"type": ["string", "null"]
+							},
+							"telephone": {
+								"type": ["string", "null"]
+							},
+							"zip": {
+								"type": ["string", "null"]
+							}
+						}
+					}
+				]
+			},
+			"UserDataPublic": {
+				"type": "object",
+				"required": ["email", "fore_name", "id", "last_name"],
+				"properties": {
+					"avatar_file_id": {
+						"type": ["integer", "null"],
+						"format": "int32"
+					},
+					"email": {
+						"type": "string"
+					},
+					"fore_name": {
+						"type": "string"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"last_name": {
+						"type": "string"
+					}
+				}
+			},
+			"UserIdParam": {
+				"type": "object",
+				"required": ["user_id"],
+				"properties": {
+					"user_id": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "User",
+			"description": "User Management"
+		},
+		{
+			"name": "Session Management",
+			"description": "Session Management"
+		},
+		{
+			"name": "Module",
+			"description": "Module Management"
+		},
+		{
+			"name": "Documentation",
+			"description": "User Management"
+		}
+	]
 }

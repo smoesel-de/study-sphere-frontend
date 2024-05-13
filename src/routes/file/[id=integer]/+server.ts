@@ -1,12 +1,13 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ locals, params }) => {
+export const GET: RequestHandler = async ({ locals, params, fetch }) => {
 	const fileContent = await locals.client.GET('/file/{file_id}', {
 		params: {
 			path: {
 				file_id: parseInt(params.id)
-			}
+			},
+			fetch
 		},
 		parseAs: 'arrayBuffer'
 	});
@@ -15,7 +16,8 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		params: {
 			path: {
 				file_id: parseInt(params.id)
-			}
+			},
+			fetch
 		}
 	});
 

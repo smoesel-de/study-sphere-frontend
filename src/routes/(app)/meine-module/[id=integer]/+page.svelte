@@ -20,8 +20,9 @@
 </div>
 
 <div class="mt-3 flex items-center">
-	<Avatar initials={'MM'} />
-	<span class="ml-2 text-xl font-semibold">Matthias Maßmann</span>
+	<Avatar initials={data.lecturer.initials} avatar={data.lecturer.avatar_file_id} />
+	<span class="ml-2 text-xl font-semibold">{data.lecturer.fore_name} {data.lecturer.last_name}</span
+	>
 </div>
 
 <Heading title="Beiträge" class="mt-7" />

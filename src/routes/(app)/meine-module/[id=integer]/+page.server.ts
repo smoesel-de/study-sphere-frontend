@@ -1,20 +1,23 @@
 import { formatDate } from '$lib/utils/formatDate';
+import { getInitials } from '$lib/utils/initials.js';
 import { error } from '@sveltejs/kit';
 
-export const load = async ({ params, locals }) => {
+export const load = async ({ params, locals, fetch }) => {
 	const module = await locals.client.GET('/module/{module_id}', {
 		params: {
 			path: {
 				module_id: parseInt(params.id)
 			}
-		}
+		},
+		fetch
 	});
 
 	const posts = await locals.client.GET('/module/{module_id}/post', {
 		params: {
 			path: {
 				module_id: parseInt(params.id)
-			}
+			},
+			fetch
 		}
 	});
 
@@ -29,5 +32,19 @@ export const load = async ({ params, locals }) => {
 		};
 	});
 
-	return { module: module.data!, posts: formattedPosts };
+	const lecturer = await locals.client.GET('/user/{user_id}', {
+		params: {
+			path: {
+				user_id: module.data!.lecturer_id!
+			},
+			fetch
+		}
+	});
+
+	const formattedLecturer = {
+		...lecturer.data!,
+		initials: getInitials(lecturer.data!.fore_name, lecturer.data!.last_name)
+	};
+
+	return { module: module.data!, posts: formattedPosts, lecturer: formattedLecturer };
 };
