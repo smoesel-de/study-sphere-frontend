@@ -13,6 +13,8 @@
 		"api-typegen": "pnpx openapi-typescript ./src/lib/services/api/spec.json -o ./src/lib/services/api/spec.d.ts"
 	},
 	"devDependencies": {
+		"@event-calendar/core": "^2.7.0",
+		"@event-calendar/time-grid": "^2.7.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-node": "^5.0.1",
 		"@sveltejs/enhanced-img": "^0.2.0",

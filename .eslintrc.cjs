@@ -8,7 +8,8 @@ module.exports = {
 		'prettier'
 	],
 	rules: {
-		'svelte/no-at-html-tags': 'off'
+		'svelte/no-at-html-tags': 'off',
+		'@typescript-eslint/ban-ts-comment': 'off'
 	},
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
