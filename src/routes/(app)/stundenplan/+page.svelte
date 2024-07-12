@@ -6,22 +6,26 @@
 	// @ts-ignore
 	import TimeGrid from '@event-calendar/time-grid';
 
-	let plugins = [TimeGrid];
-	let options = {
+	export let data;
+
+	const plugins = [TimeGrid];
+	const options = {
 		view: 'timeGridWeek',
 		locale: 'de',
 		firstDay: 1,
-		events: [
-			// your list of events
-		]
+		hiddenDays: [0, 6],
+		events: data.lectures,
+		height: '70vh',
+		scrollTime: '09:00:00',
+		allDaySlot: false
 	};
 </script>
 
 <Meta title="Stundenplan" description="Dein Stundenplan" />
 
 <Heading title="Stundenplan" />
-<div class="card mt-4 bg-white shadow-xl">
-	<div class="card-body">
+<div class="mt-4 bg-white shadow-xl lg:card">
+	<div class="lg:card-body">
 		<Calendar {plugins} {options} />
 	</div>
 </div>
