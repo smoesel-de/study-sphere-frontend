@@ -12,6 +12,15 @@ importers:
         specifier: ^0.9.3
         version: 0.9.3
     devDependencies:
+      '@event-calendar/core':
+        specifier: ^2.7.0
+        version: 2.7.0
+      '@event-calendar/list':
+        specifier: ^3.1.0
+        version: 3.1.0
+      '@event-calendar/time-grid':
+        specifier: ^2.7.0
+        version: 2.7.0
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.2.0(@sveltejs/kit@2.5.5(@sveltejs/vite-plugin-svelte@3.0.2(svelte@4.2.12)(vite@5.2.8(@types/node@20.12.7)))(svelte@4.2.12)(vite@5.2.8(@types/node@20.12.7)))
@@ -269,6 +278,18 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@event-calendar/core@2.7.0':
+    resolution: {integrity: sha512-Zo4OzKuo5KDyskrnZzJRiUyu7Ieag2dmvhBGEElaCRgmmKmZ+TxIAqLYMZOU+oMrEDVfqegAHwwEZJep7CGypg==}
+
+  '@event-calendar/core@3.1.0':
+    resolution: {integrity: sha512-hz6jpFeFUEb/mOu2vFn96wBFYEDYHb8lPyDjlaHqD4E02OXnLb/ej0kRWMu5NnF4aE7UEKq648Lx3cbH1QJrIw==}
+
+  '@event-calendar/list@3.1.0':
+    resolution: {integrity: sha512-EivcJ5jwA1kS7milhppPZ4/ys+YdqEHLwyUSoO4LjB99M3czgyyoaa7BzWMThSmF5xdqhcPBa9so5b41A/rJwQ==}
+
+  '@event-calendar/time-grid@2.7.0':
+    resolution: {integrity: sha512-XV6vbo98u1RTSlmn0dLCsD5aEOaBuFprq7EbEggpvo9armrbxD76zC1jjslTBRsgmJvgsGy9KW/zFBUNFGRYhA==}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -1789,6 +1810,10 @@ packages:
     resolution: {integrity: sha512-d8+wsh5TfPwqVzbm4/HCXC783/KPHV60NvwitJnyTA5lWn1elhXMNWhXGCJ7PwPa8qFUnyJNIyuIRt2mT0WMug==}
     engines: {node: '>=16'}
 
+  svelte@4.2.16:
+    resolution: {integrity: sha512-mQwHpqHD2PmFcCyHaZ7XiTqposaLvJ75WpYcyY5/ce3qxbYtwQpZ+M7ZKP+2CG5U6kfnBZBpPLyofhlE6ROrnQ==}
+    engines: {node: '>=16'}
+
   sveltekit-superforms@2.12.4:
     resolution: {integrity: sha512-0LILJfTpOZj8UhEfcuVZwuyDR63EGTjBq/TwHJn38PcC6KHGZ0bXu8DVHxslGUffEi9EHgeyshoJk7x3EoJVhQ==}
     peerDependencies:
@@ -2083,6 +2108,24 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
+
+  '@event-calendar/core@2.7.0':
+    dependencies:
+      svelte: 4.2.16
+
+  '@event-calendar/core@3.1.0':
+    dependencies:
+      svelte: 4.2.16
+
+  '@event-calendar/list@3.1.0':
+    dependencies:
+      '@event-calendar/core': 3.1.0
+      svelte: 4.2.16
+
+  '@event-calendar/time-grid@2.7.0':
+    dependencies:
+      '@event-calendar/core': 2.7.0
+      svelte: 4.2.16
 
   '@fastify/busboy@2.1.1': {}
 
@@ -3562,6 +3605,23 @@ snapshots:
       typescript: 5.4.4
 
   svelte@4.2.12:
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/trace-mapping': 0.3.25
+      '@types/estree': 1.0.5
+      acorn: 8.11.3
+      aria-query: 5.3.0
+      axobject-query: 4.0.0
+      code-red: 1.0.4
+      css-tree: 2.3.1
+      estree-walker: 3.0.3
+      is-reference: 3.0.2
+      locate-character: 3.0.0
+      magic-string: 0.30.9
+      periscopic: 3.1.0
+
+  svelte@4.2.16:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.4.15
