@@ -454,7 +454,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LectureData"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LectureData"
+                  }
                 }
               }
             }
@@ -554,7 +557,8 @@
           "module_id",
           "module_name",
           "room",
-          "start"
+          "start",
+          "ui_color"
         ],
         "properties": {
           "end": {
@@ -592,6 +596,9 @@
           "start": {
             "type": "integer",
             "format": "int64"
+          },
+          "ui_color": {
+            "type": "string"
           }
         }
       },
@@ -614,7 +621,8 @@
         "type": "object",
         "required": [
           "id",
-          "name"
+          "name",
+          "ui_color"
         ],
         "properties": {
           "banner_file_id": {
@@ -651,6 +659,9 @@
               "null"
             ],
             "format": "int32"
+          },
+          "ui_color": {
+            "type": "string"
           }
         }
       },

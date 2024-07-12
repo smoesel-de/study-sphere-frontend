@@ -5,6 +5,7 @@ export const load = async ({ locals }) => {
 		lectures: schedule.data!.map((lecture) => ({
 			start: new Date(lecture.start * 1000),
 			end: new Date(lecture.end * 1000),
+			backgroundColor: lecture.ui_color,
 			title: {
 				html: `
                     <div>

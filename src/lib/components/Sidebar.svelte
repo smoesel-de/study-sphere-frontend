@@ -7,7 +7,7 @@
 	$: activeUrl = $page.url.pathname;
 </script>
 
-<div class="drawer-side">
+<div class="drawer-side z-20">
 	<label for={drawerId} aria-label="close sidebar" class="drawer-overlay"></label>
 	<ul class="menu h-full w-80 bg-base-100 text-base-content">
 		<li class="mb-3">

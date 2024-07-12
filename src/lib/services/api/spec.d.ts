@@ -490,7 +490,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["LectureData"];
+                        "application/json": components["schemas"]["LectureData"][];
                     };
                 };
                 401: {
@@ -545,6 +545,7 @@ export interface components {
             room: string;
             /** Format: int64 */
             start: number;
+            ui_color: string;
         };
         LoginData: {
             email: string;
@@ -562,6 +563,7 @@ export interface components {
             name: string;
             /** Format: int32 */
             parent_id?: number | null;
+            ui_color: string;
         };
         ModuleIdParam: {
             /** Format: int32 */
