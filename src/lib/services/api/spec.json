@@ -480,6 +480,68 @@
           }
         ]
       }
+    },
+    "/post/{post_id}/submission": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "description": "multipart form data",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "array"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the file ids of the submitted files",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -948,6 +1010,10 @@
     {
       "name": "Documentation",
       "description": "User Management"
+    },
+    {
+      "name": "Post",
+      "description": "Post Management"
     }
   ]
 }

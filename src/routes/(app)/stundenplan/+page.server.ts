@@ -1,6 +1,5 @@
-export const load = async ({ locals }) => {
-	const schedule = await locals.client.GET('/schedule/');
-	console.log(schedule.data);
+export const load = async ({ locals, fetch }) => {
+	const schedule = await locals.client.GET('/schedule/', { fetch });
 	return {
 		lectures: schedule.data!.map((lecture) => ({
 			start: new Date(lecture.start * 1000),

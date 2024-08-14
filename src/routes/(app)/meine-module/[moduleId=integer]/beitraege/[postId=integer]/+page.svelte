@@ -3,7 +3,28 @@
 	import Heading from '$lib/components/Heading.svelte';
 	import Meta from '$lib/components/Meta.svelte';
 
+	import Dropzone from 'svelte-file-dropzone';
+	import { superForm } from 'sveltekit-superforms';
+
 	export let data;
+
+	const { form, errors, message, enhance } = superForm(data.form, { resetForm: false });
+
+	interface SelectedFile {
+		name: string;
+	}
+
+	interface SelectedFiles {
+		detail: {
+			acceptedFiles: SelectedFile[];
+		};
+	}
+
+	let selectedFile: SelectedFile;
+
+	function handleFilesSelect(selectedFiles: SelectedFiles) {
+		selectedFile = selectedFiles.detail.acceptedFiles[0];
+	}
 </script>
 
 {#if data.post.title}
@@ -55,11 +76,36 @@
 	{/if}
 	{#if data.post.due_date}
 		<div class="card bg-base-100 shadow-xl">
-			<div class="card-body">
-				<p class="card-title text-2xl">Abgabe</p>
-				<p><i class="fa-solid fa-clock"></i> {data.post.due_date}</p>
-				<input type="file" class="file-input file-input-bordered file-input-primary mt-3 w-full" />
-			</div>
+			<form method="post" use:enhance enctype="multipart/form-data">
+				<div class="card-body">
+					<p class="card-title text-2xl">Abgabe</p>
+					<p>
+						<i class="fa-solid fa-clock"></i>
+						{data.post.due_date}
+					</p>
+					<Dropzone
+						accept="application/pdf"
+						multiple={false}
+						on:drop={handleFilesSelect}
+						name="submissionFile"
+					>
+						{#if selectedFile}
+							{selectedFile.name}
+						{:else}
+							Ziehe eine Datei hierher, oder klicke, um eine Datei auszuwählen.
+						{/if}
+					</Dropzone>
+					{#if $message}
+						<div class="text-success">{$message}</div>
+					{/if}
+					{#if $errors.submissionFile}
+						<div class="text-error">{$errors.submissionFile}</div>
+					{/if}
+					<div class="card-actions">
+						<button class="btn btn-primary" type="submit">Abgeben</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	{/if}
 </div>

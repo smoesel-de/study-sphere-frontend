@@ -511,6 +511,56 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/post/{post_id}/submission": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    post_id: number;
+                };
+                cookie?: never;
+            };
+            /** @description multipart form data */
+            requestBody: {
+                content: {
+                    "multipart/form-data": unknown[];
+                };
+            };
+            responses: {
+                /** @description returns the file ids of the submitted files */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": number[];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
