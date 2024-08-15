@@ -4,16 +4,21 @@ export const pages: Page[] = [
 	{
 		name: 'Startseite',
 		link: '/start',
-		icon: 'fa-home'
+		icon: 'home'
 	},
 	{
 		name: 'Meine Module',
 		link: '/meine-module',
-		icon: 'fa-school'
+		icon: 'school'
 	},
 	{
 		name: 'Stundenplan',
 		link: '/stundenplan',
-		icon: 'fa-calendar-days'
+		icon: 'calendar-days'
+	},
+	{
+		name: 'Noten',
+		link: '/noten',
+		icon: 'graduation-cap'
 	}
 ];

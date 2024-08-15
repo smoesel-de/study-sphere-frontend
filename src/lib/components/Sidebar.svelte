@@ -26,7 +26,7 @@
 						document.getElementById(drawerId)?.click();
 					}}
 				>
-					<i class="fa-solid {page.icon}"></i>
+					<i class="fa-solid fa-{page.icon}"></i>
 					{page.name}
 				</a>
 			</li>
