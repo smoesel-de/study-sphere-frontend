@@ -40,7 +40,6 @@
 		title={data.post.title}
 		description="Der Beitrag {data.post.title} vom {data.post.due_date}"
 	/>
-	<Heading title={data.post.title} />
 {/if}
 
 <div class="space-y-6">
@@ -54,7 +53,10 @@
 
 	<div class="card bg-base-100 shadow-lg">
 		<div class="card-body">
-			{data.post.description}
+			<Heading title={data.post.title} />
+			<div class="mt-1">
+				{data.post.description}
+			</div>
 		</div>
 	</div>
 
