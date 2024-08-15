@@ -35,7 +35,7 @@
 <Meta title="Stundenplan" description="Dein Stundenplan" />
 
 <Heading title="Stundenplan" />
-<div class="card !-mx-1 mt-4 bg-white shadow-xl sm:!-mx-0">
+<div class="card !-mx-1 mt-4 bg-white shadow-lg sm:!-mx-0">
 	<div class="card-body !-mx-4 sm:!-mx-0">
 		<Calendar {plugins} {options} />
 	</div>
