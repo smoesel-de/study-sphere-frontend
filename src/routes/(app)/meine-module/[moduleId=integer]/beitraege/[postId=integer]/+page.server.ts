@@ -1,6 +1,14 @@
+import { env } from '$env/dynamic/private';
 import { formatDate } from '$lib/utils/formatDate';
 import { getInitials } from '$lib/utils/initials';
 import { error } from '@sveltejs/kit';
+import { fail, message, superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { z } from 'zod';
+
+const schema = z.object({
+	submissionFile: z.instanceof(File, { message: 'Bitte wähle eine Datei aus.' })
+});
 
 export const load = async ({ locals, params, fetch }) => {
 	const post = await locals.client.GET('/module/{module_id}/post/{post_id}', {
@@ -52,5 +60,29 @@ export const load = async ({ locals, params, fetch }) => {
 		initials: getInitials(author.data!.fore_name, author.data!.last_name)
 	};
 
-	return { post: formattedPost, author: formattedAuthor };
+	return { post: formattedPost, author: formattedAuthor, form: await superValidate(zod(schema)) };
+};
+
+export const actions = {
+	default: async ({ request, fetch, params, cookies }) => {
+		const form = await superValidate(request, zod(schema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const formData = new FormData();
+		formData.append('file', form.data.submissionFile);
+
+		// API-Client doesn't work with file upload so I have to do it manually
+		await fetch(`${env.API_URL}/post/${params.moduleId}/submission`, {
+			method: 'POST',
+			headers: {
+				'Session-Token': cookies.get('token') ?? ''
+			},
+			body: formData
+		});
+
+		return message(form, 'Die Datei wurde erfolgreich abgegeben.');
+	}
 };
