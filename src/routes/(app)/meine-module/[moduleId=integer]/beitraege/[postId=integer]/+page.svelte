@@ -8,7 +8,10 @@
 
 	export let data;
 
-	const { form, errors, message, enhance } = superForm(data.form, { resetForm: false });
+	$: attachments = data.post.files.filter((file) => file.file_type === 'attachment');
+	$: submissions = data.post.files.filter((file) => file.file_type === 'submission');
+
+	const { errors, message, enhance } = superForm(data.form, { resetForm: false });
 
 	interface SelectedFile {
 		name: string;
@@ -20,11 +23,16 @@
 		};
 	}
 
-	let selectedFile: SelectedFile;
+	let selectedFile: SelectedFile | undefined;
 
-	function handleFilesSelect(selectedFiles: SelectedFiles) {
-		selectedFile = selectedFiles.detail.acceptedFiles[0];
+	$: if ($message) {
+		selectedFile = undefined;
+		(document.querySelector('input[type=file]') as HTMLInputElement)!.value = '';
 	}
+
+	const handleFilesSelect = (selectedFiles: SelectedFiles) => {
+		selectedFile = selectedFiles.detail.acceptedFiles[0];
+	};
 </script>
 
 {#if data.post.title}
@@ -50,7 +58,7 @@
 		</div>
 	</div>
 
-	{#if data.post.files}
+	{#if attachments.length > 0}
 		<div class="card bg-base-100 shadow-xl">
 			<div class="card-body">
 				<p class="card-title text-2xl">Dateien</p>
@@ -61,11 +69,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each data.post.files as file}
+						{#each attachments as file}
 							<tr>
-								<td class="space-x-1"><i class="fa-solid fa-file"></i> <span>{file.name}</span></td>
+								<td class="space-x-1"
+									><i class="fa-solid fa-file"></i>
+									<span>{file.name}</span></td
+								>
 								<td class="text-right">
-									<a href="/file/{file.file_id}"><i class="fa-solid fa-download"></i></a>
+									<a href="/file/{file.file_id}">
+										<i class="fa-solid fa-download"></i>
+									</a>
 								</td>
 							</tr>
 						{/each}
@@ -104,6 +117,32 @@
 					<div class="card-actions">
 						<button class="btn btn-primary" type="submit">Abgeben</button>
 					</div>
+					{#if submissions.length > 0}
+						<p class="mt-1 text-xl">Bereits abgegeben</p>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+								</tr>
+							</thead>
+							<tbody>
+								{#each submissions as file}
+									<tr>
+										<td class="space-x-1">
+											<i class="fa-solid fa-file"></i>
+											<span>{file.name}</span>
+										</td>
+										<td class="space-x-2 text-right">
+											<a href="/file/{file.file_id}">
+												<i class="fa-solid fa-download"></i>
+											</a>
+											<i class="fa-solid fa-trash"></i>
+										</td>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					{/if}
 				</div>
 			</form>
 		</div>

@@ -83,6 +83,6 @@ export const actions = {
 			body: formData
 		});
 
-		return message(form, 'You have uploaded a valid file!');
+		return message(form, 'Die Datei wurde erfolgreich abgegeben.');
 	}
 };
