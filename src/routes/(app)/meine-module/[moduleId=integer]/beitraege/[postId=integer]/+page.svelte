@@ -40,7 +40,6 @@
 		title={data.post.title}
 		description="Der Beitrag {data.post.title} vom {data.post.due_date}"
 	/>
-	<Heading title={data.post.title} />
 {/if}
 
 <div class="space-y-6">
@@ -52,14 +51,17 @@
 		</div>
 	</div>
 
-	<div class="card bg-base-100 shadow-xl">
+	<div class="card bg-base-100 shadow-lg">
 		<div class="card-body">
-			{data.post.description}
+			<Heading title={data.post.title} />
+			<div class="mt-1">
+				{data.post.description}
+			</div>
 		</div>
 	</div>
 
 	{#if attachments.length > 0}
-		<div class="card bg-base-100 shadow-xl">
+		<div class="card bg-base-100 shadow-lg">
 			<div class="card-body">
 				<p class="card-title text-2xl">Dateien</p>
 				<table class="table">
@@ -88,7 +90,7 @@
 		</div>
 	{/if}
 	{#if data.post.due_date}
-		<div class="card bg-base-100 shadow-xl">
+		<div class="card bg-base-100 shadow-lg">
 			<form method="post" use:enhance enctype="multipart/form-data">
 				<div class="card-body">
 					<p class="card-title text-2xl">Abgabe</p>

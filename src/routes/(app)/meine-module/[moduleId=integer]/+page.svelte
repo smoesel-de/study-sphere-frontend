@@ -32,7 +32,7 @@
 		{#each data.posts as post}
 			<a
 				href="/meine-module/{data.module.id}/beitraege/{post.id}"
-				class="card bg-base-100 shadow-xl"
+				class="card bg-base-100 shadow-lg"
 			>
 				<div class="card-body">
 					<h2 class="card-title">{post.title}</h2>

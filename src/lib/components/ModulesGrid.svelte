@@ -11,7 +11,7 @@
 
 <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-4">
 	{#each modules as module}
-		<a class="card bg-base-100 shadow-xl" href="/meine-module/{module.id}">
+		<a class="card bg-base-100 shadow-lg" href="/meine-module/{module.id}">
 			<figure>
 				<img
 					src={module.banner_file_id ? `/file/${module.banner_file_id}` : defaultModuleBanner}
