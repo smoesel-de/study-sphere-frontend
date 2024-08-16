@@ -11,7 +11,7 @@
 	$: attachments = data.post.files.filter((file) => file.file_type === 'attachment');
 	$: submissions = data.post.files.filter((file) => file.file_type === 'submission');
 
-	const { errors, message, enhance } = superForm(data.form, { resetForm: false });
+	const { errors, message, submitting, enhance } = superForm(data.form, { resetForm: false });
 
 	interface SelectedFile {
 		name: string;
@@ -61,7 +61,7 @@
 	</div>
 
 	{#if attachments.length > 0}
-		<div class="card bg-base-100 shadow-lg">
+		<div class="card overflow-x-auto bg-base-100 shadow-lg">
 			<div class="card-body">
 				<p class="card-title text-2xl">Dateien</p>
 				<table class="table">
@@ -90,7 +90,7 @@
 		</div>
 	{/if}
 	{#if data.post.due_date}
-		<div class="card bg-base-100 shadow-lg">
+		<div class="card overflow-x-auto bg-base-100 shadow-lg">
 			<form method="post" use:enhance enctype="multipart/form-data">
 				<div class="card-body">
 					<p class="card-title text-2xl">Abgabe</p>
@@ -98,29 +98,50 @@
 						<i class="fa-solid fa-clock"></i>
 						{data.post.due_date}
 					</p>
-					<Dropzone
-						accept="application/pdf"
-						multiple={false}
-						on:drop={handleFilesSelect}
-						name="submissionFile"
-					>
-						{#if selectedFile}
-							{selectedFile.name}
+					<div>
+						{#if data.post.submission_is_open}
+							<div class="badge badge-success">offen</div>
 						{:else}
-							Ziehe eine Datei hierher, oder klicke, um eine Datei auszuwählen.
+							<div class="badge badge-error">geschlossen</div>
 						{/if}
-					</Dropzone>
-					{#if $message}
-						<div class="text-success">{$message}</div>
-					{/if}
-					{#if $errors.submissionFile}
-						<div class="text-error">{$errors.submissionFile}</div>
-					{/if}
-					<div class="card-actions">
-						<button class="btn btn-primary" type="submit">Abgeben</button>
+						{#if submissions.length > 0}
+							<div class="badge badge-success">abgegeben</div>
+						{:else}
+							<div class="badge badge-error">nicht abgegeben</div>
+						{/if}
 					</div>
+					{#if data.post.submission_is_open}
+						<Dropzone
+							accept="application/pdf"
+							multiple={false}
+							on:drop={handleFilesSelect}
+							name="submissionFile"
+							disabled={$submitting}
+						>
+							{#if selectedFile}
+								{selectedFile.name}
+							{:else}
+								Ziehe eine Datei hierher, oder klicke, um eine Datei auszuwählen.
+							{/if}
+						</Dropzone>
+						{#if $submitting}
+							<div class="flex items-center space-x-2 py-1">
+								<span class="loading loading-spinner text-primary"></span>
+								<span>Wird hochgeladen..</span>
+							</div>
+						{/if}
+						{#if $message}
+							<div class="text-success">{$message}</div>
+						{/if}
+						{#if $errors.submissionFile}
+							<div class="text-error">{$errors.submissionFile}</div>
+						{/if}
+						<div class="card-actions">
+							<button class="btn btn-primary" type="submit" disabled={$submitting}>Abgeben</button>
+						</div>
+					{/if}
 					{#if submissions.length > 0}
-						<p class="mt-1 text-xl">Bereits abgegeben</p>
+						<p class="mt-1 text-xl">Abgegebene Dateien</p>
 						<table class="table">
 							<thead>
 								<tr>
@@ -138,7 +159,9 @@
 											<a href="/file/{file.file_id}">
 												<i class="fa-solid fa-download"></i>
 											</a>
-											<i class="fa-solid fa-trash"></i>
+											{#if data.post.submission_is_open}
+												<i class="fa-solid fa-trash"></i>
+											{/if}
 										</td>
 									</tr>
 								{/each}
