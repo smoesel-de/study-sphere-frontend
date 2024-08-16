@@ -12,9 +12,9 @@
 			<input type="checkbox" />
 			<div class="collapse-title flex items-center justify-between">
 				<span class="text-xl font-medium">{moduleGrad.module.name}</span>
-				<div class="badge badge-primary">{moduleGrad.module.credits} Credits</div>
+				<div class="badge badge-primary flex-shrink-0">{moduleGrad.module.credits} Credits</div>
 			</div>
-			<div class="collapse-content">
+			<div class="collapse-content overflow-x-auto overflow-y-hidden">
 				<table class="table">
 					<thead>
 						<tr>

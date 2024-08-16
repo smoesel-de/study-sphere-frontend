@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { formatDate } from '$lib/utils/formatDate';
 import { getInitials } from '$lib/utils/initials';
 import { error } from '@sveltejs/kit';
-import { fail, message, superValidate } from 'sveltekit-superforms';
+import { fail, message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 
@@ -42,7 +42,10 @@ export const load = async ({ locals, params, fetch }) => {
 				return { ...fileInfo.data!, ...file };
 			})
 		),
-		due_date: post.data!.due_date !== undefined ? formatDate(post.data!.due_date!, true) : undefined
+		due_date:
+			post.data!.due_date !== undefined ? formatDate(post.data!.due_date!, true) : undefined,
+		submission_is_open:
+			post.data!.due_date !== undefined ? new Date() <= new Date(post.data!.due_date * 1000) : false
 	};
 
 	const author = await locals.client.GET('/user/{user_id}', {
@@ -75,13 +78,17 @@ export const actions = {
 		formData.append('file', form.data.submissionFile);
 
 		// API-Client doesn't work with file upload so I have to do it manually
-		await fetch(`${env.API_URL}/post/${params.moduleId}/submission`, {
+		const response = await fetch(`${env.API_URL}/post/${params.moduleId}/submission`, {
 			method: 'POST',
 			headers: {
 				'Session-Token': cookies.get('token') ?? ''
 			},
 			body: formData
 		});
+
+		if (!response.ok) {
+			return setError(form, 'submissionFile', 'Es ist ein unerwarteter Fehler aufgetreten.');
+		}
 
 		return message(form, 'Die Datei wurde erfolgreich abgegeben.');
 	}
