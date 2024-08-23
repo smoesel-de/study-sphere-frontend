@@ -561,6 +561,96 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/mark/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Gets all marks per module for the logged in user */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            [key: string]: components["schemas"]["ModuleMarkData"];
+                        };
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mark/{module_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Gets all marks of a module for the logged in user */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    module_id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MarkData"][];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -583,6 +673,8 @@ export interface components {
             /** Format: int64 */
             end: number;
             /** Format: int32 */
+            exam_id?: number | null;
+            /** Format: int32 */
             id: number;
             /** Format: int32 */
             lecturer_id: number;
@@ -601,6 +693,21 @@ export interface components {
             email: string;
             password: string;
         };
+        MarkData: {
+            /** Format: int32 */
+            absent_id?: number | null;
+            /** Format: int64 */
+            announcement_date: number;
+            comment?: string | null;
+            /** Format: int32 */
+            exam_id: number;
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            points: number;
+            /** Format: int32 */
+            student_id: number;
+        };
         ModuleData: {
             /** Format: int32 */
             banner_file_id?: number | null;
@@ -618,6 +725,12 @@ export interface components {
         ModuleIdParam: {
             /** Format: int32 */
             module_id: number;
+        };
+        ModuleMarkData: {
+            /** Format: int32 */
+            credit_points: number;
+            marks: components["schemas"]["MarkData"][];
+            module_name: string;
         };
         PostData: {
             /** Format: int32 */
