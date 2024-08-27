@@ -29,15 +29,15 @@
 					<tbody>
 						{#each moduleGrad.marks as mark}
 							<tr>
-								<td> Folgt </td>
+								<td> {mark.mark} </td>
 								<td>
 									{mark.announcement_date}
 								</td>
-								<td> Folgt </td>
+								<td>Folgt</td>
 								<td>
 									{mark.points}
 								</td>
-								<td> Folgt </td>
+								<td> {mark.average_mark} </td>
 								<td>
 									{mark.comment}
 								</td>

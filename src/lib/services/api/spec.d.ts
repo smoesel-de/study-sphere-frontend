@@ -698,11 +698,17 @@ export interface components {
             absent_id?: number | null;
             /** Format: int64 */
             announcement_date: number;
+            /** Format: double */
+            average_mark: number;
+            /** Format: double */
+            average_points: number;
             comment?: string | null;
             /** Format: int32 */
             exam_id: number;
             /** Format: int32 */
             id: number;
+            /** Format: double */
+            mark: number;
             /** Format: int32 */
             points: number;
             /** Format: int32 */
