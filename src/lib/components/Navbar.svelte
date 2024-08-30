@@ -18,7 +18,7 @@
 			</div>
 			<ul class="menu dropdown-content menu-sm z-[1] mt-3 w-36 rounded-box bg-base-100 p-2 shadow">
 				<li>
-					<a href="/"><i class="fa-solid fa-user-circle"></i> Profil</a>
+					<a href="/profil"><i class="fa-solid fa-user-circle"></i> Profil</a>
 				</li>
 				<li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Abmelden</a></li>
 			</ul>
