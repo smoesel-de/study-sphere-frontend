@@ -268,6 +268,59 @@
             "SessionCookie": []
           }
         ]
+      },
+      "post": {
+        "tags": [
+          "Module"
+        ],
+        "description": "Create a new Post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "module_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostCreateData"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No permission to create a post"
+          },
+          "404": {
+            "description": "Module not found or no access to it"
+          }
+        },
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
       }
     },
     "/module/{module_id}/post/{post_id}": {
@@ -543,6 +596,93 @@
         ]
       }
     },
+    "/post/{post_id}/attachment": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "description": "multipart form data",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "array"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the file ids of the attached files",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
+      }
+    },
+    "/post/{post_file_id}": {
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_file_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "style": "simple"
+          }
+        ],
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
+      }
+    },
     "/mark/": {
       "get": {
         "tags": [
@@ -684,6 +824,7 @@
         "required": [
           "mime_type",
           "name",
+          "upload_date",
           "uploader_id"
         ],
         "properties": {
@@ -692,6 +833,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "upload_date": {
+            "type": "integer",
+            "format": "int64"
           },
           "uploader_id": {
             "type": "integer",
@@ -900,6 +1045,7 @@
         "type": "object",
         "required": [
           "credit_points",
+          "date",
           "marks",
           "module_name"
         ],
@@ -907,6 +1053,10 @@
           "credit_points": {
             "type": "integer",
             "format": "int32"
+          },
+          "date": {
+            "type": "integer",
+            "format": "int64"
           },
           "marks": {
             "type": "array",
@@ -919,34 +1069,32 @@
           }
         }
       },
+      "PostCreateData": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "due_date": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
       "PostData": {
         "type": "object",
-        "anyOf": [
-          {
-            "type": "object",
-            "required": [
-              "module_id"
-            ],
-            "properties": {
-              "module_id": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          },
-          {
-            "type": "object",
-            "required": [
-              "lecture_id"
-            ],
-            "properties": {
-              "lecture_id": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        ],
         "required": [
           "author_id",
           "files",
@@ -980,6 +1128,20 @@
             "type": "integer",
             "format": "int32"
           },
+          "lecture_id": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "module_id": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
           "publish_date": {
             "type": [
               "integer",
@@ -1000,7 +1162,9 @@
         "required": [
           "file_id",
           "file_type",
-          "id"
+          "id",
+          "post_file_id",
+          "upload_date"
         ],
         "properties": {
           "file_id": {
@@ -1011,6 +1175,26 @@
             "$ref": "#/components/schemas/PostFileType"
           },
           "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "post_file_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "upload_date": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PostFileIdParam": {
+        "type": "object",
+        "required": [
+          "post_file_id"
+        ],
+        "properties": {
+          "post_file_id": {
             "type": "integer",
             "format": "int32"
           }
@@ -1034,6 +1218,14 @@
             "format": "int32"
           }
         }
+      },
+      "Role": {
+        "type": "string",
+        "enum": [
+          "student",
+          "lecturer",
+          "admin"
+        ]
       },
       "TimestampRange": {
         "type": "object",
@@ -1065,7 +1257,8 @@
               "email",
               "fore_name",
               "id",
-              "last_name"
+              "last_name",
+              "role"
             ],
             "properties": {
               "avatar_file_id": {
@@ -1107,6 +1300,9 @@
               "last_name": {
                 "type": "string"
               },
+              "role": {
+                "$ref": "#/components/schemas/Role"
+              },
               "street": {
                 "type": [
                   "string",
@@ -1135,7 +1331,8 @@
           "email",
           "fore_name",
           "id",
-          "last_name"
+          "last_name",
+          "role"
         ],
         "properties": {
           "avatar_file_id": {
@@ -1157,6 +1354,9 @@
           },
           "last_name": {
             "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
           }
         }
       },

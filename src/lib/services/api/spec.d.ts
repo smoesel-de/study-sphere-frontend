@@ -290,7 +290,46 @@ export interface paths {
             };
         };
         put?: never;
-        post?: never;
+        /** @description Create a new Post */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    module_id: number;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PostCreateData"];
+                };
+            };
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": number;
+                    };
+                };
+                /** @description No permission to create a post */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Module not found or no access to it */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -561,6 +600,83 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/post/{post_id}/attachment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    post_id: number;
+                };
+                cookie?: never;
+            };
+            /** @description multipart form data */
+            requestBody: {
+                content: {
+                    "multipart/form-data": unknown[];
+                };
+            };
+            responses: {
+                /** @description returns the file ids of the attached files */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": number[];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/post/{post_file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    post_file_id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: never;
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/mark/": {
         parameters: {
             query?: never;
@@ -666,6 +782,8 @@ export interface components {
         FileInfoData: {
             mime_type: string;
             name: string;
+            /** Format: int64 */
+            upload_date: number;
             /** Format: int32 */
             uploader_id: number;
         };
@@ -735,8 +853,16 @@ export interface components {
         ModuleMarkData: {
             /** Format: int32 */
             credit_points: number;
+            /** Format: int64 */
+            date: number;
             marks: components["schemas"]["MarkData"][];
             module_name: string;
+        };
+        PostCreateData: {
+            description?: string | null;
+            /** Format: int64 */
+            due_date?: number | null;
+            title?: string | null;
         };
         PostData: {
             /** Format: int32 */
@@ -747,15 +873,13 @@ export interface components {
             files: components["schemas"]["PostFileData"][];
             /** Format: int32 */
             id: number;
+            /** Format: int32 */
+            lecture_id?: number | null;
+            /** Format: int32 */
+            module_id?: number | null;
             /** Format: int64 */
             publish_date?: number | null;
             title?: string | null;
-        } | {
-            /** Format: int32 */
-            module_id: number;
-        } | {
-            /** Format: int32 */
-            lecture_id: number;
         };
         PostFileData: {
             /** Format: int32 */
@@ -763,6 +887,14 @@ export interface components {
             file_type: components["schemas"]["PostFileType"];
             /** Format: int32 */
             id: number;
+            /** Format: int32 */
+            post_file_id: number;
+            /** Format: int64 */
+            upload_date: number;
+        };
+        PostFileIdParam: {
+            /** Format: int32 */
+            post_file_id: number;
         };
         /** @enum {string} */
         PostFileType: "submission" | "attachment";
@@ -770,6 +902,8 @@ export interface components {
             /** Format: int32 */
             post_id: number;
         };
+        /** @enum {string} */
+        Role: "student" | "lecturer" | "admin";
         TimestampRange: {
             /** Format: int64 */
             end?: number | null;
@@ -788,6 +922,7 @@ export interface components {
             /** Format: int32 */
             id: number;
             last_name: string;
+            role: components["schemas"]["Role"];
             street?: string | null;
             telephone?: string | null;
             zip?: string | null;
@@ -800,6 +935,7 @@ export interface components {
             /** Format: int32 */
             id: number;
             last_name: string;
+            role: components["schemas"]["Role"];
         };
         UserIdParam: {
             /** Format: int32 */
