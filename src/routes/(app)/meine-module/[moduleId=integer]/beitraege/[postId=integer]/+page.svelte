@@ -3,6 +3,7 @@
 	import Heading from '$lib/components/Heading.svelte';
 	import Meta from '$lib/components/Meta.svelte';
 
+	import { enhance } from '$app/forms';
 	import Dropzone from 'svelte-file-dropzone';
 	import { superForm } from 'sveltekit-superforms';
 
@@ -11,7 +12,12 @@
 	$: attachments = data.post.files.filter((file) => file.file_type === 'attachment');
 	$: submissions = data.post.files.filter((file) => file.file_type === 'submission');
 
-	const { errors, message, submitting, enhance } = superForm(data.form, { resetForm: false });
+	const {
+		errors,
+		message,
+		submitting,
+		enhance: superEnhance
+	} = superForm(data.form, { resetForm: false });
 
 	interface SelectedFile {
 		name: string;
@@ -53,7 +59,7 @@
 
 	<div class="card bg-base-100 shadow-lg">
 		<div class="card-body">
-			<Heading title={data.post.title} />
+			<Heading title={data.post.title ?? ''} />
 			<div class="mt-1">
 				{data.post.description}
 			</div>
@@ -91,7 +97,7 @@
 	{/if}
 	{#if data.post.due_date}
 		<div class="card overflow-x-auto bg-base-100 shadow-lg">
-			<form method="post" use:enhance enctype="multipart/form-data">
+			<form method="post" action="?/uploadFile" enctype="multipart/form-data" use:superEnhance>
 				<div class="card-body">
 					<p class="card-title text-2xl">Abgabe</p>
 					<p>
@@ -155,12 +161,17 @@
 											<i class="fa-solid fa-file"></i>
 											<span>{file.name}</span>
 										</td>
-										<td class="space-x-2 text-right">
+										<td class="flex flex-row justify-end space-x-2 text-right">
 											<a href="/file/{file.file_id}">
 												<i class="fa-solid fa-download"></i>
 											</a>
 											{#if data.post.submission_is_open}
-												<i class="fa-solid fa-trash"></i>
+												<form use:enhance method="post" action="?/deleteFile">
+													<input name="fileId" value={file.post_file_id} class="hidden" />
+													<button type="submit">
+														<i class="fa-solid fa-trash"></i>
+													</button>
+												</form>
 											{/if}
 										</td>
 									</tr>

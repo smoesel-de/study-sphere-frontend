@@ -44,8 +44,9 @@ export const load = async ({ locals, params, fetch }) => {
 		),
 		due_date:
 			post.data!.due_date !== undefined ? formatDate(post.data!.due_date!, true) : undefined,
-		submission_is_open:
-			post.data!.due_date !== undefined ? new Date() <= new Date(post.data!.due_date * 1000) : false
+		submission_is_open: post.data!.due_date
+			? new Date() <= new Date(post.data!.due_date * 1000)
+			: false
 	};
 
 	const author = await locals.client.GET('/user/{user_id}', {
@@ -67,7 +68,7 @@ export const load = async ({ locals, params, fetch }) => {
 };
 
 export const actions = {
-	default: async ({ request, fetch, params, cookies }) => {
+	uploadFile: async ({ request, fetch, params, cookies }) => {
 		const form = await superValidate(request, zod(schema));
 
 		if (!form.valid) {
@@ -91,5 +92,16 @@ export const actions = {
 		}
 
 		return message(form, 'Die Datei wurde erfolgreich abgegeben.');
+	},
+	deleteFile: async ({ request, locals }) => {
+		const formData = await request.formData();
+		console.log(formData.get('fileId'));
+		await locals.client.DELETE('/post/{post_file_id}', {
+			params: {
+				path: {
+					post_file_id: Number(formData.get('fileId')?.toString())
+				}
+			}
+		});
 	}
 };
