@@ -16,6 +16,6 @@
 				<slot />
 			</div>
 		</div>
-		<Sidebar {drawerId} />
+		<Sidebar {drawerId} userRole={data.userRole} />
 	</div>
 </div>
