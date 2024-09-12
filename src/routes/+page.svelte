@@ -31,7 +31,7 @@
 			</div>
 		</figure>
 		<div class="card-body justify-center">
-			<form use:enhance method="post" class="">
+			<form use:enhance method="post">
 				<h2 class="text-4xl font-bold">Melde Dich jetzt an!</h2>
 				<div class="mb-5 mt-3 space-y-2">
 					<div>

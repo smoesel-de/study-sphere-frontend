@@ -36,7 +36,7 @@
 			{/if}
 		{/each}
 		<li class="font-lg absolute bottom-2 font-bold">
-			<a href="https://smoesel.de" class="">
+			<a href="https://smoesel.de">
 				<span>Made by</span>
 				<enhanced:img src="$lib/assets/smoesel.png" class="h-12 w-12" alt="SMOESEL" />
 			</a>
