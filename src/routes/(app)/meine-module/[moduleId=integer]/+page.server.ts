@@ -1,4 +1,4 @@
-import { formatDate } from '$lib/utils/formatDate';
+import { formatDateToSeconds, formatSecondsToDate } from '$lib/utils/formatDate';
 import { getInitials } from '$lib/utils/initials.js';
 import { error } from '@sveltejs/kit';
 import { fail, message, superValidate } from 'sveltekit-superforms';
@@ -35,12 +35,15 @@ export const load = async ({ params, locals, fetch }) => {
 		return error(404, 'Das Modul wurde nicht gefunden.');
 	}
 
-	const formattedPosts = posts.data!.map((post) => {
-		return {
-			...post,
-			publish_date: post.publish_date !== undefined ? formatDate(post.publish_date!) : undefined
-		};
-	});
+	const formattedPosts = posts
+		.data!.sort((a, b) => (b.publish_date ?? 0) - (a.publish_date ?? 0))
+		.map((post) => {
+			return {
+				...post,
+				publish_date:
+					post.publish_date !== undefined ? formatSecondsToDate(post.publish_date!) : undefined
+			};
+		});
 
 	const lecturer = await locals.client.GET('/user/{user_id}', {
 		params: {
@@ -83,7 +86,8 @@ export const actions = {
 			},
 			body: {
 				title: form.data.title,
-				description: form.data.description
+				description: form.data.description,
+				due_date: form.data.dueDate ? formatDateToSeconds(new Date(form.data.dueDate)) : null
 			}
 		});
 		return message(form, 'success');

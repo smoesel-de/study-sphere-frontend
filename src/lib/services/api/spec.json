@@ -534,6 +534,20 @@
         ]
       }
     },
+    "/post/": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Gets all public posts",
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
+      }
+    },
     "/post/{post_id}/submission": {
       "post": {
         "tags": [
@@ -854,8 +868,7 @@
           "module_id",
           "module_name",
           "room",
-          "start",
-          "ui_color"
+          "start"
         ],
         "properties": {
           "end": {
@@ -902,7 +915,10 @@
             "format": "int64"
           },
           "ui_color": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -984,6 +1000,7 @@
       "ModuleData": {
         "type": "object",
         "required": [
+          "credit_points",
           "id",
           "name",
           "ui_color"
@@ -997,10 +1014,7 @@
             "format": "int32"
           },
           "credit_points": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "id": {
@@ -1013,6 +1027,12 @@
               "null"
             ],
             "format": "int32"
+          },
+          "lecturer_name": {
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "name": {
             "type": "string"
@@ -1164,7 +1184,8 @@
           "file_type",
           "id",
           "post_file_id",
-          "upload_date"
+          "upload_date",
+          "uploader_name"
         ],
         "properties": {
           "file_id": {
@@ -1185,6 +1206,9 @@
           "upload_date": {
             "type": "integer",
             "format": "int64"
+          },
+          "uploader_name": {
+            "type": "string"
           }
         }
       },

@@ -550,6 +550,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/post/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Gets all public posts */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: never;
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/post/{post_id}/submission": {
         parameters: {
             query?: never;
@@ -805,7 +831,7 @@ export interface components {
             room: string;
             /** Format: int64 */
             start: number;
-            ui_color: string;
+            ui_color?: string | null;
         };
         LoginData: {
             email: string;
@@ -836,11 +862,12 @@ export interface components {
             /** Format: int32 */
             banner_file_id?: number | null;
             /** Format: int32 */
-            credit_points?: number | null;
+            credit_points: number;
             /** Format: int32 */
             id: number;
             /** Format: int32 */
             lecturer_id?: number | null;
+            lecturer_name?: string | null;
             name: string;
             /** Format: int32 */
             parent_id?: number | null;
@@ -891,6 +918,7 @@ export interface components {
             post_file_id: number;
             /** Format: int64 */
             upload_date: number;
+            uploader_name: string;
         };
         PostFileIdParam: {
             /** Format: int32 */

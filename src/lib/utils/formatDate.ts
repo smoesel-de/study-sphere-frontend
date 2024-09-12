@@ -1,5 +1,9 @@
 import dayjs from 'dayjs';
 
-export const formatDate = (dateInSeconds: number, withTime: boolean = false): string => {
+export const formatSecondsToDate = (dateInSeconds: number, withTime: boolean = false): string => {
 	return dayjs(new Date(dateInSeconds * 1000)).format('DD.MM.YYYY' + (withTime ? ' HH:mm' : ''));
+};
+
+export const formatDateToSeconds = (date: Date): number => {
+	return date.getTime() / 1000;
 };

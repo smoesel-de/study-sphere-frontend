@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import { formatDate } from '$lib/utils/formatDate';
+import { formatSecondsToDate } from '$lib/utils/formatDate';
 import { getInitials } from '$lib/utils/initials';
 import { error } from '@sveltejs/kit';
 import { fail, message, setError, superValidate } from 'sveltekit-superforms';
@@ -28,7 +28,9 @@ export const load = async ({ locals, params, fetch }) => {
 	const formattedPost = {
 		...post.data!,
 		publish_date:
-			post.data!.publish_date !== undefined ? formatDate(post.data!.publish_date!) : undefined,
+			post.data!.publish_date !== undefined
+				? formatSecondsToDate(post.data!.publish_date!)
+				: undefined,
 		files: await Promise.all(
 			post.data!.files.map(async (file) => {
 				const fileInfo = await locals.client.GET('/file/{file_id}/info', {
@@ -42,8 +44,7 @@ export const load = async ({ locals, params, fetch }) => {
 				return { ...fileInfo.data!, ...file };
 			})
 		),
-		due_date:
-			post.data!.due_date !== undefined ? formatDate(post.data!.due_date!, true) : undefined,
+		due_date: post.data!.due_date ? formatSecondsToDate(post.data!.due_date!, true) : undefined,
 		submission_is_open: post.data!.due_date
 			? new Date() <= new Date(post.data!.due_date * 1000)
 			: false

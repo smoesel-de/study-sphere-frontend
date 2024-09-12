@@ -21,7 +21,7 @@
 			</figure>
 			<div class="card-body">
 				<h2 class="text-2xl font-bold">{module.name}</h2>
-				<p>Matthias Maßmann</p>
+				<p>{module.lecturer_name}</p>
 			</div>
 		</a>
 	{/each}
