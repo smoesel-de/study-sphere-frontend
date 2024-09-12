@@ -3,6 +3,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Heading from '$lib/components/Heading.svelte';
 	import Meta from '$lib/components/Meta.svelte';
+	import PostList from '$lib/components/PostList.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 
 	export let data;
@@ -42,23 +43,7 @@
 			<i class="fa-solid fa-plus"> </i> Beitrag hinzufügen
 		</button>
 	{/if}
-	{#if data.posts.length !== 0}
-		<div class="space-y-3">
-			{#each data.posts as post}
-				<a
-					href="/meine-module/{data.module.id}/beitraege/{post.id}"
-					class="card bg-base-100 shadow-lg"
-				>
-					<div class="card-body">
-						<h2 class="card-title">{post.title}</h2>
-						<p><i class="fa-solid fa-calendar-day"></i> {post.publish_date}</p>
-					</div>
-				</a>
-			{/each}
-		</div>
-	{:else}
-		<p>Noch Keine Beiträge vorhanden</p>
-	{/if}
+	<PostList posts={data.posts} />
 </div>
 
 <dialog id="newPostModal" class="modal" bind:this={newPostDialog}>
