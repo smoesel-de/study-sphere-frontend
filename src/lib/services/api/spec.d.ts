@@ -566,6 +566,43 @@ export interface paths {
                 cookie?: never;
             };
             requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PostData"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/post/{post_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get a post by its id */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    post_id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
             responses: never;
         };
         put?: never;
@@ -676,7 +713,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/post/{post_file_id}": {
+    "/post_file/{post_file_id}": {
         parameters: {
             query?: never;
             header?: never;

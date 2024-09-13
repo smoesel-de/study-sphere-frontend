@@ -540,6 +540,47 @@
           "Post"
         ],
         "description": "Gets all public posts",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostData"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionToken": [],
+            "SessionCookie": []
+          }
+        ]
+      }
+    },
+    "/post/{post_id}": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "description": "Get a post by its id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "style": "simple"
+          }
+        ],
         "security": [
           {
             "SessionToken": [],
@@ -672,7 +713,7 @@
         ]
       }
     },
-    "/post/{post_file_id}": {
+    "/post_file/{post_file_id}": {
       "delete": {
         "tags": [
           "Post"

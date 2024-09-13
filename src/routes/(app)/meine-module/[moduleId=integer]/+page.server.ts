@@ -52,7 +52,7 @@ export const load = async ({ params, locals, fetch }) => {
 		initials: getInitials(lecturer.data!.fore_name, lecturer.data!.last_name)
 	};
 
-	const user = await locals.client.GET('/user/');
+	const user = await locals.client.GET('/user/', { fetch });
 
 	const form = await superValidate(zod(newPostSchema));
 
