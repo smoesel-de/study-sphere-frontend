@@ -67,6 +67,7 @@ export const load = async ({ locals, params, fetch }) => {
 		publish_date: post.data!.publish_date
 			? formatSecondsToDate(post.data!.publish_date!)
 			: undefined,
+		description: post.data!.description.replace(/\n/g, '<br>'),
 		attachments,
 		submissions: submissionsByUploader,
 		files: await Promise.all(

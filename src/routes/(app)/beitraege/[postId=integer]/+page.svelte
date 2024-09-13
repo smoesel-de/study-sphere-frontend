@@ -58,7 +58,7 @@
 		<div class="card-body">
 			<Heading title={data.post.title ?? ''} />
 			<div class="mt-1">
-				{data.post.description}
+				{@html data.post.description}
 			</div>
 		</div>
 	</div>
