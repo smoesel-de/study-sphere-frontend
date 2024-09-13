@@ -28,10 +28,16 @@
 					<enhanced:img src="$lib/assets/logo.png" alt="Study Sphere Logo" class="w-28" />
 					<h2 class="text-6xl font-extrabold text-primary">Study Sphere</h2>
 				</div>
+				<div class="absolute bottom-2 flex w-full justify-center font-bold">
+					<a href="https://smoesel.de" class="flex flex-row items-center gap-1">
+						<span>Made by</span>
+						<enhanced:img src="$lib/assets/smoesel.png" class="h-10 w-10" alt="SMOESEL" />
+					</a>
+				</div>
 			</div>
 		</figure>
 		<div class="card-body justify-center">
-			<form use:enhance method="post" class="">
+			<form use:enhance method="post">
 				<h2 class="text-4xl font-bold">Melde Dich jetzt an!</h2>
 				<div class="mb-5 mt-3 space-y-2">
 					<div>

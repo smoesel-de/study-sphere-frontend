@@ -1,46 +1,20 @@
-export const load = async () => {
+import { formatSecondsToDate } from '$lib/utils/formatDate';
+
+const formatMark = (mark: number) => mark.toString().replace('.', ',');
+
+export const load = async ({ locals, fetch }) => {
+	const marks = await locals.client.GET('/mark/', { fetch });
+
 	return {
-		moduleGrades: [
-			{
-				module: {
-					name: 'Mathematik für Informatiker',
-					credits: 10
-				},
-				exams: [
-					{
-						date: '10.12.2023',
-						announcement_date: '10.12.2024',
-						average: '2,2',
-						points: 98,
-						grade: '1,1',
-						comment: 'Woran hats gelegen?'
-					}
-				]
-			},
-			{
-				module: {
-					name: 'Informatik',
-					credits: 10
-				},
-				exams: [
-					{
-						date: '10.12.2023',
-						announcement_date: '10.12.2024',
-						average: '2,2',
-						points: 98,
-						grade: '1,1',
-						comment: 'Woran hats gelegen?'
-					},
-					{
-						date: '10.12.2023',
-						announcement_date: '10.12.2024',
-						average: '2,2',
-						points: 98,
-						grade: '1,1',
-						comment: 'Woran hats gelegen?'
-					}
-				]
-			}
-		]
+		moduleMarks: Object.values(marks.data!).map((mark) => ({
+			...mark,
+			date: formatSecondsToDate(mark.date),
+			marks: mark.marks.map((mark) => ({
+				...mark,
+				mark: formatMark(mark.mark),
+				average_mark: formatMark(mark.average_mark),
+				announcement_date: formatSecondsToDate(mark.announcement_date)
+			}))
+		}))
 	};
 };

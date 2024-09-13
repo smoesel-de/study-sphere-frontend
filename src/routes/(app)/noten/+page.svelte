@@ -7,12 +7,12 @@
 <Heading title="Noten" />
 
 <div class="mt-4 space-y-4">
-	{#each data.moduleGrades as moduleGrad}
+	{#each data.moduleMarks as moduleMark}
 		<div class="collapse collapse-arrow mt-4 border bg-white">
 			<input type="checkbox" />
 			<div class="collapse-title flex items-center justify-between">
-				<span class="text-xl font-medium">{moduleGrad.module.name}</span>
-				<div class="badge badge-primary flex-shrink-0">{moduleGrad.module.credits} Credits</div>
+				<span class="text-xl font-medium">{moduleMark.module_name}</span>
+				<div class="badge badge-primary flex-shrink-0">{moduleMark.credit_points} Credits</div>
 			</div>
 			<div class="collapse-content overflow-x-auto overflow-y-hidden">
 				<table class="table">
@@ -27,25 +27,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each moduleGrad.exams as exam}
+						{#each moduleMark.marks as mark}
 							<tr>
 								<td>
-									{exam.date}
+									{moduleMark.date}
 								</td>
 								<td>
-									{exam.announcement_date}
+									{mark.announcement_date}
 								</td>
 								<td>
-									{exam.grade}
+									{mark.mark}
 								</td>
 								<td>
-									{exam.points}
+									{mark.points}
 								</td>
+								<td> {mark.average_mark} </td>
 								<td>
-									{exam.average}
-								</td>
-								<td>
-									{exam.comment}
+									{mark.comment}
 								</td>
 							</tr>
 						{/each}

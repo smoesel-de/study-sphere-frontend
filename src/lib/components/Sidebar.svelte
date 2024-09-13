@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { pages } from '$lib/constants';
+	import { type components } from '$lib/services/api/spec';
 
 	export let drawerId: string;
+	export let userRole: components['schemas']['Role'];
 
 	$: activeUrl = $page.url.pathname;
 </script>
@@ -17,19 +19,27 @@
 			</a>
 		</li>
 		{#each pages as page}
-			<li>
-				<a
-					href={page.link}
-					class="text-lg"
-					class:text-primary={activeUrl.startsWith(page.link)}
-					on:click={() => {
-						document.getElementById(drawerId)?.click();
-					}}
-				>
-					<i class="fa-solid fa-{page.icon}"></i>
-					{page.name}
-				</a>
-			</li>
+			{#if page.roles.includes(userRole)}
+				<li>
+					<a
+						href={page.link}
+						class="text-lg"
+						class:text-primary={activeUrl.startsWith(page.link)}
+						on:click={() => {
+							document.getElementById(drawerId)?.click();
+						}}
+					>
+						<i class="fa-solid fa-{page.icon}"></i>
+						{page.name}
+					</a>
+				</li>
+			{/if}
 		{/each}
+		<li class="absolute bottom-2 font-bold">
+			<a href="https://smoesel.de">
+				<span>Made by</span>
+				<enhanced:img src="$lib/assets/smoesel.png" class="h-12 w-12" alt="SMOESEL" />
+			</a>
+		</li>
 	</ul>
 </div>
