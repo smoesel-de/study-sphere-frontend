@@ -1,0 +1,22 @@
+name: Lint and Test Build
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint_and_test_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: true
+      - name: Run Lint
+        run: pnpm run lint
+      - name: Run Test Build
+        run: pnpm run build

@@ -2,3 +2,5 @@
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+src/lib/services/api/spec.d.ts
+src/lib/services/api/spec.json
